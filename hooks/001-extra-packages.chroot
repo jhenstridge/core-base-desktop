@@ -11,6 +11,8 @@ export DEBIAN_FRONTEND=noninteractive
 # ensure we don't use proposed for new installs
 rm -f /etc/apt/sources.list.d/proposed.list
 
+# Enable universe
+sed -i 's/main/main universe/' /etc/apt/sources.list
 
 # ensure we have /proc or systemd will fail
 mount -t proc proc /proc
@@ -133,6 +135,7 @@ PACKAGES=(
     squashfs-tools
     sudo
     systemd
+    systemd-homed
     systemd-sysv
     systemd-timesyncd
     systemd-resolved
