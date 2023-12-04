@@ -44,6 +44,7 @@ parts:
     override-build: |
       # noble installs units into usr/lib
       sed 's|lib/systemd|usr/lib/systemd|g' -i debian/rules
+      sed 's/\(e.wait()\)\( for e in dhcp_events\)/asyncio.create_task(\1)\2/' -i subiquitycore/controllers/network.py
       "${CRAFT_PROJECT_DIR}/build-package.sh" build
     override-stage: |
       "${CRAFT_PROJECT_DIR}/build-package.sh" stage
