@@ -15,6 +15,9 @@ for name in gshadow shadow; do
     chown root:shadow /var/lib/extrausers/$name
 done
 
+# Disable adding users to the "users" group
+sed -i 's/^#USERS_GID=.*$/USERS_GID=-1/' /etc/adduser.conf
+
 # Enable libnss-extrusers
 sed -i 's/^passwd:.*files/\0 extrausers/' /etc/nsswitch.conf
 sed -i 's/^group:.*files/\0 extrausers/' /etc/nsswitch.conf
