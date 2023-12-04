@@ -18,6 +18,10 @@ done
 # Disable adding users to the "users" group
 sed -i 's/^#USERS_GID=.*$/USERS_GID=-1/' /etc/adduser.conf
 
+# Configure sshd to query systemd for ssh keys
+sed -i 's|#AuthorizedKeysCommand .*$|AuthorizedKeysCommand /usr/bin/userdbctl ssh-authorized-keys %u|' /etc/ssh/sshd_config
+sed -i 's|#AuthorizedKeysCommandUser .*$|AuthorizedKeysCommandUser root|' /etc/ssh/sshd_config
+
 # Enable libnss-extrusers
 sed -i 's/^passwd:.*files/\0 extrausers/' /etc/nsswitch.conf
 sed -i 's/^group:.*files/\0 extrausers/' /etc/nsswitch.conf
